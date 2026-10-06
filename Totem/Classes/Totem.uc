@@ -3,7 +3,7 @@
 //
 // 1. Passive Cheat-Death: Intercepts fatal blows, leaving player at
 //    SurviveHealth (5 HP), gives 1.0s invulnerability and emergency recovery HoT.
-// 2. Primary Fire (LMB): AoE Pulse Heal (+50 HP to user and friendlies in 400 radius).
+// 2. Primary Fire (LMB): AoE Pulse Heal (+55 HP to user and friendlies in 400 radius).
 // 3. Secondary Fire (RMB): Targeted HoT injection on a teammate (+120 HP over 10s).
 // 4. Reload (R): Dedicated self-cast for full sustained HoT (+120 HP over 10s).
 //=============================================================================
@@ -326,7 +326,7 @@ simulated function ClientFinish()
 defaultproperties
 {
      SurviveHealth=5
-     AoEHealAmount=50
+     AoEHealAmount=55
      AoERadius=400.000000
      HoTHealPerTick=6
      HoTTicks=20
