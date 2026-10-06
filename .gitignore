@@ -17,6 +17,7 @@
 !Molotov/**/*.uc
 !SeekerMines/**/*.uc
 !SentryGun/**/*.uc
+!Totem/**/*.uc
 !TripLasers/**/*.uc
 !TugGame/**/*.uc
 !ZombieGame/**/*.uc
