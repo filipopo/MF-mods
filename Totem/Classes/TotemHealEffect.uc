@@ -1,5 +1,4 @@
 //=============================================================================
-// TotemHealEffect
 // Applied to players/allies for Heal-Over-Time (HoT) and emergency invulnerability.
 //=============================================================================
 class TotemHealEffect extends Inventory;
