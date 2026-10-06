@@ -1,11 +1,13 @@
 //=============================================================================
 // Totem - Hybrid Totem of Undying & Tactical Restoration Stim
 //
-// 1. Passive Cheat-Death: Intercepts fatal blows, leaving player at
-//    SurviveHealth (5 HP), gives 1.0s invulnerability and emergency recovery HoT.
-// 2. Primary Fire (LMB): AoE Pulse Heal (+55 HP to user and friendlies in 400 radius).
-// 3. Secondary Fire (RMB): Targeted HoT injection on a teammate (+120 HP over 10s).
-// 4. Reload (R): Dedicated self-cast for full sustained HoT (+120 HP over 10s).
+// 1. Passive "Totem of Undying": Intercepts fatal blows, leaving player at
+//    configurable SurviveHealth (5 HP), gives 1.5s invulnerability grace
+//    period and an emergency recovery HoT (+18 HP over 3s)
+// 2. Primary Fire (LMB): AoE Pulse Heal (+55 HP instantly to user and all
+//    friendly teammates within 400 radius)
+// 3. Secondary Fire (RMB): Targeted HoT on a teammate (+120 HP over 10s)
+// 4. Reload (R): Dedicated self-cast for full sustained HoT (+120 HP over 10s)
 //=============================================================================
 class Totem extends RageWeapon;
 
@@ -252,10 +254,7 @@ function ApplyFullHoT(Pawn Target)
     if (Target == Owner)
         Pawn(Owner).ClientMessage("Sustained Regeneration activated.");
     else
-    {
         Pawn(Owner).ClientMessage("Injected ally with Sustained Regeneration!");
-        Pawn(Target).ClientMessage("Ally injected you with Sustained Regeneration!");
-    }
 
     Target.PlaySound(Target.HitSound2, SLOT_Talk, 0.8);
 }
@@ -311,7 +310,7 @@ defaultproperties
      HoTInterval=0.500000
      ReviveHoTHealPerTick=3
      ReviveHoTTicks=6
-     ReviveGracePeriod=1.400000
+     ReviveGracePeriod=1.500000
      TraceRange=150.000000
      AIRating=-1.000000
      NameColor=(R=255,G=215)
