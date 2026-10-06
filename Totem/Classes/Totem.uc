@@ -41,7 +41,7 @@ simulated function String GetAmmoStatus()
 
 function bool IsFriendly(Pawn Target)
 {
-    if (Target == None || Pawn(Owner) == None)
+    if (Target == None)
         return false;
     if (Target == Owner)
         return true;
@@ -59,8 +59,7 @@ function int ArmorAbsorbDamage(int Damage, name DamageType, vector HitLocation)
     local int AllowedDamage;
     local Pawn P;
 
-    // Ignore zero-damage calls (zone transitions send ReduceDamage(0, 'Breathe'))
-    // and unblockable damage types
+    // Ignore zero-damage calls (zone transitions send ReduceDamage(0, 'Breathe')) and unblockable damage types
     if (Damage <= 0 || DamageType == 'Suicided' || DamageType == 'Crushed')
         return Damage;
 
@@ -91,18 +90,12 @@ function TriggerRevival(vector HitLocation)
     Buff = Spawn(class'TotemHealEffect', P);
     if (Buff != None)
     {
-        // GiveTo first (settles the actor into inventory + Idle2 state),
-        // THEN ActivateBuff (starts the timer safely after state transition)
+        // GiveTo first (settles the actor into inventory + Idle2 state) THEN ActivateBuff (starts the timer safely after state transition)
         Buff.GiveTo(P);
         Buff.ActivateBuff(ReviveHoTHealPerTick, ReviveHoTTicks, HoTInterval, ReviveGracePeriod);
     }
 
-    if (PlayerPawn(P) != None)
-    {
-        PlayerPawn(P).ClientInstantFlash(-0.6, vect(1000, 850, 200));
-        PlayerPawn(P).ClientMessage("Totem of Undying triggered! Death prevented.");
-    }
-
+    Pawn(P).ClientMessage("Totem of Undying triggered! Death prevented.");
     P.PlayOwnedSound(Sound'MiscSFX.ArmourWearOut', SLOT_Misc, P.SoundDampening * 2.0);
 
     UseAmmo(1);
@@ -119,7 +112,7 @@ function TriggerRevival(vector HitLocation)
 
 function Fire(float Value)
 {
-    if (Pawn(Owner) != None && Pawn(Owner).CanFire() && AmmoInClip())
+    if (Pawn(Owner).CanFire() && AmmoInClip())
     {
         bPointing = True;
         bCanClientFire = True;
@@ -131,9 +124,6 @@ function PulseHeal()
 {
     local Pawn P;
     local int TargetsHealed;
-
-    if (Pawn(Owner) == None)
-        return;
 
     // Count how many targets actually need healing
     TargetsHealed = 0;
@@ -153,17 +143,11 @@ function PulseHeal()
     // Don't consume ammo if nobody actually needed healing
     if (TargetsHealed == 0)
     {
-        if (PlayerPawn(Owner) != None)
-            PlayerPawn(Owner).ClientMessage("No one needs healing.");
+        Pawn(Owner).ClientMessage("No one needs healing.");
         return;
     }
 
-    if (PlayerPawn(Owner) != None)
-    {
-        PlayerPawn(Owner).ClientInstantFlash(0.35, vect(200, 1000, 400));
-        PlayerPawn(Owner).ClientMessage("AoE Pulse Heal activated! (" $ TargetsHealed $ " healed)");
-    }
-
+    Pawn(Owner).ClientMessage("AoE Pulse Heal activated! (" $ TargetsHealed $ " healed)");
     Owner.PlaySound(Sound'MiscSFX.ArmourWearOut', SLOT_Misc, Pawn(Owner).SoundDampening);
 
     UseAmmo(1);
@@ -189,7 +173,7 @@ function bool ApplyInstantHeal(Pawn Target, int Amount)
 
 function AltFire(float Value)
 {
-    if (Pawn(Owner) != None && Pawn(Owner).CanFire() && AmmoInClip())
+    if (Pawn(Owner).CanFire() && AmmoInClip())
     {
         bPointing = True;
         bCanClientFire = True;
@@ -213,15 +197,18 @@ function TryTargetedHoT()
     {
         if (Pawn(Other).Health >= Pawn(Other).Default.Health)
         {
-            if (PlayerPawn(Owner) != None)
-                PlayerPawn(Owner).ClientMessage("Target is already at full health.");
+            Pawn(Owner).ClientMessage("Target is already at full health.");
             return;
         }
+
         ApplyFullHoT(Pawn(Other));
         UseAmmo(1);
+
         if (!AmmoInClip())
             ConsumeWeapon();
     }
+
+    Pawn(Owner).ClientMessage("Target not found.");
 }
 
 //=============================================================================
@@ -230,16 +217,17 @@ function TryTargetedHoT()
 
 function Reload()
 {
-    if (AmmoInClip() && Pawn(Owner) != None && Pawn(Owner).CanFire())
+    if (AmmoInClip() && Pawn(Owner).CanFire())
     {
         if (Pawn(Owner).Health >= Pawn(Owner).Default.Health)
         {
-            if (PlayerPawn(Owner) != None)
-                PlayerPawn(Owner).ClientMessage("Already at full health.");
+            Pawn(Owner).ClientMessage("Already at full health.");
             return;
         }
+
         ApplyFullHoT(Pawn(Owner));
         UseAmmo(1);
+
         if (!AmmoInClip())
             ConsumeWeapon();
     }
@@ -262,19 +250,11 @@ function ApplyFullHoT(Pawn Target)
     }
 
     if (Target == Owner)
-    {
-        if (PlayerPawn(Owner) != None)
-        {
-            PlayerPawn(Owner).ClientInstantFlash(0.4, vect(200, 600, 1000));
-            PlayerPawn(Owner).ClientMessage("Sustained Regeneration activated.");
-        }
-    }
+        Pawn(Owner).ClientMessage("Sustained Regeneration activated.");
     else
     {
-        if (PlayerPawn(Owner) != None)
-            PlayerPawn(Owner).ClientMessage("Injected ally with Sustained Regeneration!");
-        if (PlayerPawn(Target) != None)
-            PlayerPawn(Target).ClientMessage("Ally injected you with Sustained Regeneration!");
+        Pawn(Owner).ClientMessage("Injected ally with Sustained Regeneration!");
+        Pawn(Target).ClientMessage("Ally injected you with Sustained Regeneration!");
     }
 
     Target.PlaySound(Target.HitSound2, SLOT_Talk, 0.8);
@@ -288,8 +268,7 @@ function ApplyFullHoT(Pawn Target)
 function ConsumeWeapon()
 {
     bIsAnArmor = false;
-    if (Pawn(Owner) != None)
-        Pawn(Owner).SwitchToBestWeapon();
+    Pawn(Owner).SwitchToBestWeapon();
     GotoState('DownWeapon');
 }
 
@@ -316,8 +295,7 @@ simulated function ClientFinish()
 {
     if (!AmmoInClip())
     {
-        if (PlayerPawn(Owner) != None)
-            PlayerPawn(Owner).SwitchToBestWeapon();
+        Pawn(Owner).SwitchToBestWeapon();
         return;
     }
     Super.ClientFinish();
@@ -333,12 +311,12 @@ defaultproperties
      HoTInterval=0.500000
      ReviveHoTHealPerTick=3
      ReviveHoTTicks=6
-     ReviveGracePeriod=1.000000
+     ReviveGracePeriod=1.400000
      TraceRange=150.000000
      AIRating=-1.000000
      NameColor=(R=255,G=215)
      MaxCanCarry=1
-     CarrySize=2
+     CarrySize=1
      MaxClipAmmo=1
      MaxClips=1
      bDestroyWhenEmpty=True
