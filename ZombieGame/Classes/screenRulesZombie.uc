@@ -141,7 +141,6 @@ function SaveRules()
 
 defaultproperties
 {
-     ScoreLimitMax=100
      TXT_SpawnAnywhere="Spawn Anywhere"
      TXT_KillTransform="Transform on Death"
      TXT_ZombieInfect="Zombie Infection"

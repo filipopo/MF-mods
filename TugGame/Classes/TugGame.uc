@@ -427,19 +427,19 @@ event PlayerPawn Login
 
 defaultproperties
 {
-     bSpawnAnywhere=False
      bKillTransform=True
      MeleeDistance=600
      bScoreTeamKills=False
+     GoalTeamScore=3.000000
      MaxTeamSize=32
      FragLimit=3
      TimeLimit=8
      BotConfigType=Class'TugGame.TugBotInfo'
      DefaultPlayerClass=Class'TugGame.TugPlayer'
+     RulesMenuType="TugGame.screenRulesTug"
      HUDType=Class'TugGame.TugHUD'
      MapPrefix="TG-"
      BeaconName="TG"
-     RulesMenuType="TugGame.screenRulesTug"
      GameName="Tug of war"
      GameReplicationInfoClass=Class'TugGame.TugReplicationInfo'
 }

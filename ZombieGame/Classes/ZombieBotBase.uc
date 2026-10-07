@@ -66,9 +66,7 @@ function Died(pawn Killer, name damageType, vector HitLocation)
 
 defaultproperties
 {
-     bAlwaysRelevant=True
-     bIsNemesis=False
      regenerationRate=1.500000
      bGoodDriver=True
-     PreferedTeam=0
+     bAlwaysRelevant=True
 }

@@ -425,18 +425,18 @@ defaultproperties
      Damage=320
      DamageRadius=440.000000
      MaxLifeTime=480.000000
-     Health=15
-     AirSpeed=620.000000
      GroundSpeed=540.000000
+     AirSpeed=620.000000
      AccelRate=2400.000000
+     Health=15
      DrawType=DT_Mesh
-     Mesh=LodMesh'Drone_Air'
+     Mesh=LodMesh'SeekerMines.Drone_Air'
      CollisionRadius=14.000000
      CollisionHeight=10.000000
+     bBlockActors=False
+     bBlockPlayers=False
      LightType=LT_Pulse
      LightBrightness=255
      LightHue=40
      LightRadius=12
-     bBlockActors=False
-     bBlockPlayers=False
 }

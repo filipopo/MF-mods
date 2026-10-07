@@ -294,6 +294,6 @@ simulated function PostRender(canvas Canvas)
 
 defaultproperties
 {
-     HumanOutlineColor=(R=0,G=160,B=255,A=255)
+     HumanOutlineColor=(G=160,B=255,A=255)
      ScoreIcons(2)=(X=128,Y=128,W=64,H=64,t=Texture'Rage.ScoreIcons')
 }

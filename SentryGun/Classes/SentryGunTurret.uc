@@ -609,24 +609,21 @@ defaultproperties
      AccuracySpread=0.025000
      TurnRate=95.000000
      MaxLifeTime=480.000000
-     Team=255
+     bCanFly=False
      Health=80
+     bAlwaysRelevant=True
+     RemoteRole=ROLE_SimulatedProxy
      DrawType=DT_Mesh
      Mesh=LodMesh'RageWeapons.HeavyMachineGunPickupCarryMesh'
      DrawScale=1.250000
      CollisionRadius=20.000000
-     CollisionHeight=22.000000
      bCollideActors=True
      bCollideWorld=True
      bBlockActors=True
      bBlockPlayers=True
-     bProjTarget=True
-     bCanFly=False
      LightType=LT_Pulse
      LightBrightness=255
      LightHue=40
      LightRadius=12
-     RemoteRole=ROLE_SimulatedProxy
-     bAlwaysRelevant=True
      NetPriority=2.500000
 }

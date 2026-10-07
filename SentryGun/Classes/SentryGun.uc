@@ -182,12 +182,11 @@ defaultproperties
 {
      MaxActiveSentries=2
      MaxClipAmmo=1
-     bDestroyWhenEmpty=True
+     WeaponIcon=(X=0,W=128,t=Texture'SentryGun.Icons.SentryIcon')
+     AIRating=0.700000
+     DeathMessage="%k's %w shredded %o."
      CarrySize=2
      InventoryGroup=11
      PickupMessage="Loaded up Sentry Gun."
      ItemName="Sentry Gun"
-     DeathMessage="%k's %w shredded %o."
-     AIRating=0.700000
-     WeaponIcon=(X=0,Y=0,W=128,H=64,t=Texture'SentryGun.Icons.SentryIcon')
 }

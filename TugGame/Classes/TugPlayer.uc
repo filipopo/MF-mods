@@ -23,9 +23,6 @@ function Died(pawn Killer, name damageType, vector HitLocation)
 
 defaultproperties
 {
-     Footstep1=Sound'RagePlayerSounds.(All).stone01'
-     Footstep2=Sound'RagePlayerSounds.(All).stone02'
-     Footstep3=Sound'RagePlayerSounds.(All).stone03'
      TeamSkin1=1
      TeamSkin2=2
      TeamSkin3=3

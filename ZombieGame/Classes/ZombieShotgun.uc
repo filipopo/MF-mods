@@ -58,9 +58,9 @@ function ProcessTraceHit(Actor Other, Vector HitLocation, Vector HitNormal, Vect
 
 defaultproperties
 {
-     RecoilPower=0.150000
-     MaxClips=22
      NumShellFragments=12
+     MaxClips=22
+     RecoilPower=0.150000
      DeathMessage="%k blasted %o with the Boomstick."
      PickupMessage="Loaded up Zombie Boomstick."
      ItemName="Zombie Boomstick"

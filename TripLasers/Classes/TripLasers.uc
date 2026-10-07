@@ -74,8 +74,8 @@ defaultproperties
 {
      MaxLaserDistance=1536.000000
      MaxClipAmmo=3
+     WeaponIcon=(X=0,t=Texture'triplasers.Icons.TripLaserIcon')
      DeathMessage="%k Disintegrated %o."
      PickupMessage="Loaded up TripLasers."
      ItemName="Trip Laser"
-     WeaponIcon=(X=0,Y=0,W=64,H=64,t=Texture'TripLasers.Icons.TripLaserIcon')
 }

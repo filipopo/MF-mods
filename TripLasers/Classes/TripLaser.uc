@@ -221,6 +221,6 @@ state Active
 
 defaultproperties
 {
-     SoundVolume=80
      LaserMaxDistance=1536.000000
+     SoundVolume=80
 }

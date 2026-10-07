@@ -294,13 +294,8 @@ state PlayerWalking
 
 defaultproperties
 {
-     bAlwaysRelevant=True
-     bIsNemesis=False
-     regenerationRate=1.500000
      MaxCarry=6
-     Footstep1=Sound'RagePlayerSounds.(All).stone01'
-     Footstep2=Sound'RagePlayerSounds.(All).stone02'
-     Footstep3=Sound'RagePlayerSounds.(All).stone03'
+     regenerationRate=1.500000
      TeamSkin1=1
      TeamSkin2=2
      TeamSkin3=3
@@ -308,5 +303,6 @@ defaultproperties
      TeamSkinName="RagePlayerGfx.MFTeamB"
      TeamMeshName="RageGfx.RagePlayer2Mesh"
      MenuName="Covert Trooper"
+     bAlwaysRelevant=True
      Mesh=SkeletalMesh'RageGfx.RagePlayer2Mesh'
 }

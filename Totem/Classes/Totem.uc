@@ -317,15 +317,15 @@ defaultproperties
      ReviveHoTTicks=6
      ReviveGracePeriod=1.500000
      TraceRange=150.000000
-     AIRating=-1.000000
-     MaxCanCarry=1
-     CarrySize=1
      MaxClipAmmo=1
      MaxClips=1
      bDestroyWhenEmpty=True
-     WeaponIcon=(X=0,Y=0,W=64,H=64,t=Texture'Totem.Icons.TotemIcon')
+     WeaponIcon=(W=64,H=64,t=Texture'Totem.Icons.TotemIcon')
      bCanThrow=False
      bOwnsCrosshair=True
+     AIRating=-1.000000
+     MaxCanCarry=1
+     CarrySize=1
      AutoSwitchPriority=0
      InventoryGroup=10
      PickupMessage="Loaded up Totem of Undying."

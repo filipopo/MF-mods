@@ -54,8 +54,7 @@ defaultproperties
 {
      speed=1200.000000
      MaxSpeed=3000.000000
-     DrawType=DT_Mesh
-     Mesh=LodMesh'Drone_Air'
+     Mesh=LodMesh'SeekerMines.Drone_Air'
      CollisionRadius=16.000000
      CollisionHeight=16.000000
 }
