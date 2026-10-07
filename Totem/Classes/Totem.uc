@@ -51,7 +51,7 @@ function bool IsFriendly(Pawn Target)
     if (Target == Owner)
         return true;
     if (Level.Game.bTeamGame && Target.PlayerReplicationInfo != None)
-        return (Pawn(Owner).PlayerReplicationInfo.Team == Target.PlayerReplicationInfo.Team);
+        return Pawn(Owner).PlayerReplicationInfo.Team == Target.PlayerReplicationInfo.Team;
     return false;
 }
 
@@ -325,7 +325,7 @@ defaultproperties
      ReviveHoTHealPerTick=3.166667
      ReviveHoTTicks=6
      ReviveGracePeriod=1.500000
-     TraceRange=150.000000
+     TraceRange=160.000000
      MaxClipAmmo=1
      MaxClips=1
      bDestroyWhenEmpty=True
