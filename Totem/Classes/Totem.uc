@@ -6,7 +6,7 @@
 //    period and an emergency recovery HoT (+19 HP over 3s)
 // 2. Primary Fire (LMB): AoE Pulse Heal (+56 HP instantly to user and all
 //    friendly teammates within 400 radius)
-// 3. Secondary Fire (RMB): Targeted HoT on a teammate (+120 HP over 10s)
+// 3. Secondary Fire (RMB): Targeted HoT on a teammate (+118 HP over 10s)
 // 4. Reload (R): Dedicated self-cast for full sustained HoT (+120 HP over 10s)
 //=============================================================================
 class Totem extends RageWeapon;
@@ -19,6 +19,7 @@ var float AoERadius;
 var float HoTHealPerTick;
 var int HoTTicks;
 var float HoTInterval;
+var float AllyHoTHealPerTick;
 var float ReviveHoTHealPerTick;
 var int ReviveHoTTicks;
 var float ReviveGracePeriod;
@@ -247,19 +248,26 @@ function Reload()
 function ApplyFullHoT(Pawn Target)
 {
     local TotemHealEffect Buff;
+    local float HealPerTick;
+
+    if (Target == Owner)
+    {
+        HealPerTick = HoTHealPerTick;
+        Pawn(Owner).ClientMessage("Sustained Regeneration activated.");
+    }
+    else
+    {
+        HealPerTick = AllyHoTHealPerTick;
+        Pawn(Owner).ClientMessage("Injected ally with Sustained Regeneration!");
+    }
 
     Buff = Spawn(class'TotemHealEffect', Target);
     if (Buff != None)
     {
         // GiveTo first, THEN ActivateBuff (same pattern as TriggerRevival)
         Buff.GiveTo(Target);
-        Buff.ActivateBuff(HoTHealPerTick, HoTTicks, HoTInterval, 0.0);
+        Buff.ActivateBuff(HealPerTick, HoTTicks, HoTInterval, 0.0);
     }
-
-    if (Target == Owner)
-        Pawn(Owner).ClientMessage("Sustained Regeneration activated.");
-    else
-        Pawn(Owner).ClientMessage("Injected ally with Sustained Regeneration!");
 
     Target.PlaySound(Target.HitSound2, SLOT_Talk, 0.8);
 }
@@ -313,6 +321,7 @@ defaultproperties
      HoTHealPerTick=6.000000
      HoTTicks=20
      HoTInterval=0.500000
+     AllyHoTHealPerTick=5.900000
      ReviveHoTHealPerTick=3.166667
      ReviveHoTTicks=6
      ReviveGracePeriod=1.500000
