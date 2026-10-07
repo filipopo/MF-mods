@@ -88,7 +88,7 @@ function DamageNearby(float Damage)
             // Damage if line of sight is clear, or if target is within half radius (fire spreading through doors)
             HitA = Trace(HitLocation, HitNormal, A.Location, Location, false);
             if (HitA == None || Dist <= FireRadius * 0.5)
-                A.TakeDamage(Damage, Instigator, Location, vect(0, 0, 0), 'Exploded');
+                A.TakeDamage(Damage, Instigator, Location, vect(0, 0, 0), 'MolotovDOTMolotov');
         }
     }
 }

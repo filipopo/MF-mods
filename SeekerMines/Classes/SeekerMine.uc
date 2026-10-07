@@ -188,6 +188,14 @@ function Actor FindBestTarget()
     return Best;
 }
 
+function string KillMessage(name damageType, pawn Other)
+{
+    if (Instigator != None && Instigator.PlayerReplicationInfo != None)
+        return Instigator.PlayerReplicationInfo.PlayerName $ "'s Seeker Mine hunted down " $ Other.PlayerReplicationInfo.PlayerName $ ".";
+
+    return Other.PlayerReplicationInfo.PlayerName $ " was hunted down by a Seeker Mine.";
+}
+
 function BlowUp()
 {
     local vector ExplodeLoc;
@@ -198,7 +206,7 @@ function BlowUp()
     bDetonated = true;
     ExplodeLoc = Location + vect(0,0,16);
 
-    HurtRadius(Damage, DamageRadius, 'RageWeaponsDOTTripBombs', 70000, ExplodeLoc);
+    HurtRadius(Damage, DamageRadius, 'SeekerMinesDOTSeekerMines', 70000, ExplodeLoc);
     MakeNoise(1.0);
 
     Class'RageEffects.RageEffect'.static.AddExplosionServer(self, ExplodeLoc, 3.5, vect(0,0,1));

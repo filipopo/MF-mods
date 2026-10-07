@@ -89,7 +89,7 @@ simulated function Touch(actor Other)
 {
     if (!Other.IsA('LevelInfo') && !Other.bWorldGeometry && Pawn(Other) != None && !IsFriendly(Other))
     {
-        Other.TakeDamage(280, Instigator, Location, vect(0, 0, 0), 'RageWeaponsDOTTripBombs');
+        Other.TakeDamage(280, Instigator, Location, vect(0, 0, 0), 'TripLasersDOTTripLasers');
         Destroy();
     }
 }
@@ -123,7 +123,7 @@ simulated function Tick(float Delta)
         Dist = VSize(Dif);
         if (Dist < MaxDist && !IsFriendly(Veh))
         {
-            Veh.TakeDamage(280, Instigator, Location, vect(0, 0, 0), 'RageWeaponsDOTTripBombs');
+            Veh.TakeDamage(280, Instigator, Location, vect(0, 0, 0), 'TripLasersDOTTripLasers');
             Destroy();
             return;
         }

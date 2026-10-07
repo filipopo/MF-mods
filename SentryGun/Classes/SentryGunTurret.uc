@@ -259,9 +259,9 @@ function Actor FindBestTarget()
 function string KillMessage(name damageType, pawn Other)
 {
     if (Instigator != None && Instigator.PlayerReplicationInfo != None)
-        return Instigator.PlayerReplicationInfo.PlayerName $ "'s Sentry Gun shredded " $ Other.PlayerReplicationInfo.PlayerName;
+        return Instigator.PlayerReplicationInfo.PlayerName $ "'s Sentry Gun shredded " $ Other.PlayerReplicationInfo.PlayerName $ ".";
 
-    return Other.PlayerReplicationInfo.PlayerName $ " was shredded by a Sentry Gun";
+    return Other.PlayerReplicationInfo.PlayerName $ " was shredded by a Sentry Gun.";
 }
 
 function bool UpdateTurretRotation(Actor Target, float DeltaTime)
@@ -375,7 +375,7 @@ function ProcessTraceHit(Actor Other, Vector HitLoc, Vector HitNorm, Vector Dir)
         else
             DamageInstigator = Self;
 
-        Other.TakeDamage(ShotDamage, DamageInstigator, HitLoc, Dir * 1000, 'tracedshot');
+        Other.TakeDamage(ShotDamage, DamageInstigator, HitLoc, Dir * 1000, 'SentryGunDOTSentryGun');
 
         if (!Other.bIsPawn && !Other.IsA('Carcass'))
             Spawn(class'RageSpriteSmokePuff',,, HitLoc + HitNorm * 9);
@@ -569,7 +569,7 @@ function BlowUp()
     bDead = true;
     ExplodeLoc = Location + vect(0,0,10);
 
-    HurtRadius(85, 250, 'RageWeaponsDOTTripBombs', 70000, ExplodeLoc);
+    HurtRadius(85, 250, 'SentryGunDOTSentryGun', 70000, ExplodeLoc);
     MakeNoise(1.0);
 
     Class'RageEffects.RageEffect'.static.AddExplosionServer(self, ExplodeLoc, 2.5, vect(0,0,1));

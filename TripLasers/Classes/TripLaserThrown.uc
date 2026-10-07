@@ -30,7 +30,7 @@ simulated function HitWall(vector HitNormal, actor Wall)
 
         // on the server spawn a bomb where we landed
         if (Role == Role_Authority)
-            Spawn(Class'TripLaserOnGround',, '', Location - vect(0, 0, 7), Rotation);
+            Spawn(Class'TripLaserOnGround', Instigator, '', Location - vect(0, 0, 7), Rotation);
 
         Destroy();
     }

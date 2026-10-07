@@ -121,5 +121,6 @@ defaultproperties
      MaxClipAmmo=1
      PickupMessage="Loaded up Seeker Mines."
      ItemName="Seeker Mine"
+     DeathMessage="%k's %w hunted down %o."
      WeaponIcon=(X=0,Y=0,W=64,H=64,t=Texture'SeekerMines.Icons.SeekerMineIcon')
 }
