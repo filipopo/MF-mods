@@ -3,6 +3,8 @@
 //=============================================================================
 class SentryGun extends TripBombs;
 
+#exec TEXTURE IMPORT NAME=SentryIcon FILE=Textures\sentry_icon.bmp GROUP=Icons MIPS=OFF Flags=2
+
 var int MaxActiveSentries;
 
 function Fire(float Value)
@@ -186,4 +188,5 @@ defaultproperties
      PickupMessage="Loaded up Sentry Gun."
      ItemName="Sentry Gun"
      AIRating=0.700000
+     WeaponIcon=(X=0,Y=0,W=128,H=64,t=Texture'SentryGun.Icons.SentryIcon')
 }

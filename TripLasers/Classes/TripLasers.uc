@@ -4,6 +4,8 @@
 
 class TripLasers extends TripBombs;
 
+#exec TEXTURE IMPORT NAME=TripLaserIcon FILE=Textures\triplaser_icon.bmp GROUP=Icons MIPS=OFF Flags=2
+
 function bool TryAndStick()
 {
     local vector HitLocation, HitNormal, StartTrace, EndTrace, X, Y, Z;
@@ -75,4 +77,5 @@ defaultproperties
      DeathMessage="%k Disintegrated %o."
      PickupMessage="Loaded up TripLasers."
      ItemName="Trip Laser"
+     WeaponIcon=(X=0,Y=0,W=64,H=64,t=Texture'TripLasers.Icons.TripLaserIcon')
 }

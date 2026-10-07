@@ -4,6 +4,8 @@
 
 class Molotov extends Grenades;
 
+#exec TEXTURE IMPORT NAME=MolotovIcon FILE=Textures\molotov_icon.bmp GROUP=Icons MIPS=OFF Flags=2
+
 defaultproperties
 {
      MaxClipAmmo=2
@@ -12,4 +14,5 @@ defaultproperties
      DeathMessage="%k Set %o on Fire."
      PickupMessage="Loaded up Molotov cocktails."
      ItemName="Molotov Cocktail"
+     WeaponIcon=(X=0,Y=0,W=64,H=64,t=Texture'Molotov.Icons.MolotovIcon')
 }
