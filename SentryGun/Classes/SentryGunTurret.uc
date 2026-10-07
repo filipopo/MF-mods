@@ -60,6 +60,22 @@ simulated function UpdateTeamVisuals()
         LightHue = 0;   // Red team
 }
 
+// Returns the placer if they're still on the turret's team, otherwise Self (orphaned turret).
+function Pawn GetDamageInstigator()
+{
+    if (Instigator != None && Instigator.PlayerReplicationInfo != None)
+    {
+        if (Level.Game != None && Level.Game.bTeamGame)
+        {
+            if (Instigator.PlayerReplicationInfo.Team == Team)
+                return Instigator;
+            return Self;
+        }
+        return Instigator; // FFA: always credit placer
+    }
+    return Self;
+}
+
 function bool GetPlacedTeam(Actor A, out byte OutTeam)
 {
     local string S;
@@ -258,7 +274,7 @@ function Actor FindBestTarget()
 
 function string KillMessage(name damageType, pawn Other)
 {
-    if (Instigator != None && Instigator.PlayerReplicationInfo != None)
+    if (Instigator != None && Instigator.PlayerReplicationInfo != None && (!Level.Game.bTeamGame || Instigator.PlayerReplicationInfo.Team == Team))
         return Instigator.PlayerReplicationInfo.PlayerName $ "'s Sentry Gun shredded " $ Other.PlayerReplicationInfo.PlayerName $ ".";
 
     return Other.PlayerReplicationInfo.PlayerName $ " was shredded by a Sentry Gun.";
@@ -353,8 +369,6 @@ function FireShot()
 
 function ProcessTraceHit(Actor Other, Vector HitLoc, Vector HitNorm, Vector Dir)
 {
-    local Pawn DamageInstigator;
-
     if (Other == None || Other == Self)
         return;
 
@@ -370,13 +384,7 @@ function ProcessTraceHit(Actor Other, Vector HitLoc, Vector HitNorm, Vector Dir)
         if (Other.bIsPawn)
             Other.PlaySound(Sound'MiscSFX.RageChunkHit',, 4.0,, 100);
 
-        if (Instigator != None)
-            DamageInstigator = Instigator;
-        else
-            DamageInstigator = Self;
-
-        Other.TakeDamage(ShotDamage, DamageInstigator, HitLoc, Dir * 1000, 'SentryGunDOTSentryGun');
-
+        Other.TakeDamage(ShotDamage, GetDamageInstigator(), HitLoc, Dir * 1000, 'SentryGunDOTSentryGun');
         if (!Other.bIsPawn && !Other.IsA('Carcass'))
             Spawn(class'RageSpriteSmokePuff',,, HitLoc + HitNorm * 9);
     }
@@ -569,6 +577,7 @@ function BlowUp()
     bDead = true;
     ExplodeLoc = Location + vect(0,0,10);
 
+    Instigator = GetDamageInstigator(); // Disown if placer switched teams
     HurtRadius(85, 250, 'SentryGunDOTSentryGun', 70000, ExplodeLoc);
     MakeNoise(1.0);
 

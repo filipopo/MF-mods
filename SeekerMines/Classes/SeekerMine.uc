@@ -64,6 +64,22 @@ function InitPlacer(Pawn Placer)
     }
 }
 
+// Returns the placer if they're still on the mine's team, otherwise Self (orphaned mine).
+function Pawn GetDamageInstigator()
+{
+    if (Instigator != None && Instigator.PlayerReplicationInfo != None)
+    {
+        if (Level.Game != None && Level.Game.bTeamGame)
+        {
+            if (Instigator.PlayerReplicationInfo.Team == PlacedTeam)
+                return Instigator;
+            return Self;
+        }
+        return Instigator; // FFA: always credit placer
+    }
+    return Self;
+}
+
 function float GetMoveSpeed()
 {
     if (bFlyer)
@@ -190,7 +206,7 @@ function Actor FindBestTarget()
 
 function string KillMessage(name damageType, pawn Other)
 {
-    if (Instigator != None && Instigator.PlayerReplicationInfo != None)
+    if (Instigator != None && Instigator.PlayerReplicationInfo != None && (!Level.Game.bTeamGame || Instigator.PlayerReplicationInfo.Team == PlacedTeam))
         return Instigator.PlayerReplicationInfo.PlayerName $ "'s Seeker Mine hunted down " $ Other.PlayerReplicationInfo.PlayerName $ ".";
 
     return Other.PlayerReplicationInfo.PlayerName $ " was hunted down by a Seeker Mine.";
@@ -206,6 +222,7 @@ function BlowUp()
     bDetonated = true;
     ExplodeLoc = Location + vect(0,0,16);
 
+    Instigator = GetDamageInstigator(); // Disown if placer switched teams
     HurtRadius(Damage, DamageRadius, 'SeekerMinesDOTSeekerMines', 70000, ExplodeLoc);
     MakeNoise(1.0);
 

@@ -89,7 +89,7 @@ simulated function Touch(actor Other)
 {
     if (!Other.IsA('LevelInfo') && !Other.bWorldGeometry && Pawn(Other) != None && !IsFriendly(Other))
     {
-        Other.TakeDamage(280, Instigator, Location, vect(0, 0, 0), 'TripLasersDOTTripLasers');
+        Other.TakeDamage(280, GetDamageInstigator(), Location, vect(0, 0, 0), 'TripLasersDOTTripLasers');
         Destroy();
     }
 }
@@ -103,6 +103,22 @@ function PostBeginPlay()
 {
     PlacedTeam = Instigator.PlayerReplicationInfo.Team;
     Super.PostBeginPlay();
+}
+
+// Returns the placer if still on the mine's team, None if switched (orphaned trap).
+function Pawn GetDamageInstigator()
+{
+    if (Instigator != None && Instigator.PlayerReplicationInfo != None)
+    {
+        if (Level.Game.bTeamGame)
+        {
+            if (Instigator.PlayerReplicationInfo.Team == PlacedTeam)
+                return Instigator;
+            return None;
+        }
+        return Instigator; // FFA: always credit placer
+    }
+    return None;
 }
 
 simulated function Tick(float Delta)
@@ -123,7 +139,7 @@ simulated function Tick(float Delta)
         Dist = VSize(Dif);
         if (Dist < MaxDist && !IsFriendly(Veh))
         {
-            Veh.TakeDamage(280, Instigator, Location, vect(0, 0, 0), 'TripLasersDOTTripLasers');
+            Veh.TakeDamage(280, GetDamageInstigator(), Location, vect(0, 0, 0), 'TripLasersDOTTripLasers');
             Destroy();
             return;
         }

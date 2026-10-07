@@ -12,6 +12,22 @@ function PostBeginPlay()
     Super.PostBeginPlay();
 }
 
+// Returns the placer if still on the laser's team, None if switched (orphaned trap).
+function Pawn GetDamageInstigator()
+{
+    if (Instigator != None && Instigator.PlayerReplicationInfo != None)
+    {
+        if (Level.Game.bTeamGame)
+        {
+            if (Instigator.PlayerReplicationInfo.Team == PlacedTeam)
+                return Instigator;
+            return None;
+        }
+        return Instigator; // FFA: always credit placer
+    }
+    return None;
+}
+
 function bool GetPlacedTeam(Actor A, out byte OutTeam)
 {
     local string S;
@@ -164,7 +180,7 @@ state Active
             HitA = Trace(HitLocation, HitNormal, TraceEnd, Location, true);
             if (HitA != None && Pawn(HitA) != None && !IsFriendly(HitA))
             {
-                HitA.TakeDamage(280, Instigator, HitLocation, vect(0, 0, 0), 'TripLasersDOTTripLasers');
+                HitA.TakeDamage(280, GetDamageInstigator(), HitLocation, vect(0, 0, 0), 'TripLasersDOTTripLasers');
                 Explode();
                 return;
             }
