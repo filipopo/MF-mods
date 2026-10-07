@@ -96,20 +96,9 @@ function bool GetPlacedTeam(Actor A, out byte OutTeam)
 
 function bool IsPawnFriendly(Pawn P)
 {
-    local byte OtherTeam;
-
     if (P == None || P.Health <= 0)
         return true;
 
-    // Check generic PlacedTeam / Team attribute (SeekerMine, SentryGunTurret, etc.)
-    if (GetPlacedTeam(P, OtherTeam))
-    {
-        if (Level.Game != None && Level.Game.bTeamGame)
-            return OtherTeam == PlacedTeam;
-        return P.Instigator == Instigator;
-    }
-
-    // Players and bots with PlayerReplicationInfo
     if (P.PlayerReplicationInfo != None)
     {
         if (Level.Game != None && Level.Game.bTeamGame)
