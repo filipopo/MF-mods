@@ -3,7 +3,7 @@
 //
 // 1. Passive "Totem of Undying": Intercepts fatal blows, leaving player at
 //    configurable SurviveHealth (5 HP), gives 1.5s invulnerability grace
-//    period and an emergency recovery HoT (+18 HP over 3s)
+//    period and an emergency recovery HoT (+19 HP over 3s)
 // 2. Primary Fire (LMB): AoE Pulse Heal (+56 HP instantly to user and all
 //    friendly teammates within 400 radius)
 // 3. Secondary Fire (RMB): Targeted HoT on a teammate (+120 HP over 10s)
@@ -16,10 +16,10 @@ class Totem extends RageWeapon;
 var int SurviveHealth;
 var int AoEHealAmount;
 var float AoERadius;
-var int HoTHealPerTick;
+var float HoTHealPerTick;
 var int HoTTicks;
 var float HoTInterval;
-var int ReviveHoTHealPerTick;
+var float ReviveHoTHealPerTick;
 var int ReviveHoTTicks;
 var float ReviveGracePeriod;
 var float TraceRange;
@@ -310,10 +310,10 @@ defaultproperties
      SurviveHealth=5
      AoEHealAmount=56
      AoERadius=400.000000
-     HoTHealPerTick=6
+     HoTHealPerTick=6.000000
      HoTTicks=20
      HoTInterval=0.500000
-     ReviveHoTHealPerTick=3
+     ReviveHoTHealPerTick=3.166667
      ReviveHoTTicks=6
      ReviveGracePeriod=1.500000
      TraceRange=150.000000

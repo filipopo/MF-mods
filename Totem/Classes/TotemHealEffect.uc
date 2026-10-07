@@ -3,15 +3,16 @@
 //=============================================================================
 class TotemHealEffect extends Inventory;
 
-var int HealPerTick;
+var float HealPerTick;
 var int MaxTicks;
 var int CurrentTicks;
 var float TickInterval;
 var float GracePeriodRemaining;
 var bool bInvulnerable;
 var bool bActivated;
+var float HealAccumulator;
 
-function ActivateBuff(int InHealPerTick, int InTotalTicks, float InInterval, float InGracePeriod)
+function ActivateBuff(float InHealPerTick, int InTotalTicks, float InInterval, float InGracePeriod)
 {
     HealPerTick = InHealPerTick;
     MaxTicks = InTotalTicks;
@@ -20,6 +21,7 @@ function ActivateBuff(int InHealPerTick, int InTotalTicks, float InInterval, flo
     GracePeriodRemaining = InGracePeriod;
     bInvulnerable = (InGracePeriod > 0.0);
     bActivated = true;
+    HealAccumulator = 0.0;
 
     SetTimer(TickInterval, true);
 }
@@ -27,6 +29,7 @@ function ActivateBuff(int InHealPerTick, int InTotalTicks, float InInterval, flo
 function Timer()
 {
     local Pawn P;
+    local int ActualHeal;
 
     if (!bActivated)
         return;
@@ -48,8 +51,17 @@ function Timer()
         }
     }
 
-    if (P.Health < P.Default.Health)
-        P.Health = Min(P.Default.Health, P.Health + HealPerTick);
+    HealAccumulator += HealPerTick;
+    if (HealAccumulator >= 1.0)
+    {
+        ActualHeal = int(HealAccumulator);
+        HealAccumulator -= ActualHeal;
+
+        if (P.Health < P.Default.Health)
+            P.Health = Min(P.Default.Health, P.Health + ActualHeal);
+        else
+            HealAccumulator = 0.0;
+    }
 
     CurrentTicks++;
     if (CurrentTicks >= MaxTicks && !bInvulnerable)
