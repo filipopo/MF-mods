@@ -199,7 +199,7 @@ function CheckVehicleRunOver()
             continue;
 
         Dist = VSize(V.Location - Location);
-        if (Dist > V.CollisionRadius + CollisionRadius)
+        if (Dist > V.CollisionRadius / 1.5 + CollisionRadius)
             continue;
 
         Speed = VSize(V.GetTransVel());
@@ -208,9 +208,9 @@ function CheckVehicleRunOver()
             if (V.aSeatsOccupant[V.DriverSeat] != None)
                 Driver = V.aSeatsOccupant[V.DriverSeat];
 
-            if (Driver != None)
+            if (!IsPawnFriendly(Driver))
                 TakeDamage(Health, Driver, Location, V.Velocity * 50, 'RunDown');
-            else
+            else if (Driver == None)
                 TakeDamage(Health, V, Location, V.Velocity * 50, 'RunDown');
             return;
         }
