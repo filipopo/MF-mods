@@ -36,7 +36,7 @@ function float RateSelf(out int bUseAltMode)
         MaxHealth = P.Default.Health;
 
     // If bot is badly injured, inject self
-    if (P.Health < (MaxHealth * 0.45))
+    if (P.Health < (MaxHealth * 0.4))
     {
         bUseAltMode = 0;
         return 0.95;

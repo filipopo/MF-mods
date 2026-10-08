@@ -115,7 +115,7 @@ function BecomeZombie(Pawn P, bool bIsNemesis)
     local float exp;
     local float ratio;
 
-    ratio = (Teams[0].Size + 0.5) / Max(Teams[1].Size, 1);
+    ratio = Teams[0].Size / Max(Teams[1].Size, 1);
     bIsNemesis = bIsNemesis || (ratio >= 5.0);
 
     if (bIsNemesis && IsOnTeam(P, 1))
