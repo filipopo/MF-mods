@@ -69,6 +69,7 @@ function bool IsPawnFriendly(Pawn P)
 // Returns true if Other is a confirmed teammate or a non-empty vehicle with ONLY friendly occupants
 function bool IsFriendly(Actor Other)
 {
+    local WheelCollision WC;
     local Vehicle V;
     local int i;
     local bool bFoundFriendly;
@@ -85,7 +86,12 @@ function bool IsFriendly(Actor Other)
         return Other.Instigator == Instigator;
     }
 
-    V = Vehicle(Other);
+    WC = WheelCollision(Other);
+    if (WC != None)
+        V = Vehicle(WC.Owner);
+    else
+        V = Vehicle(Other);
+
     if (V != None)
     {
         bFoundFriendly = false;
@@ -178,11 +184,18 @@ state Active
         if (Laser != None)
         {
             HitA = Trace(HitLocation, HitNormal, TraceEnd, Location, true);
-            if (HitA != None && Pawn(HitA) != None && !IsFriendly(HitA))
+            if (HitA != None && !IsFriendly(HitA))
             {
-                HitA.TakeDamage(280, GetDamageInstigator(), HitLocation, vect(0, 0, 0), 'TripLasersDOTTripLasers');
-                Explode();
-                return;
+                // Resolve WheelCollision to its owning Vehicle for damage
+                if (WheelCollision(HitA) != None)
+                    HitA = WheelCollision(HitA).Owner;
+
+                if (Pawn(HitA) != None)
+                {
+                    HitA.TakeDamage(280, GetDamageInstigator(), HitLocation, vect(0, 0, 0), 'TripLasersDOTTripLasers');
+                    Explode();
+                    return;
+                }
             }
         }
 
